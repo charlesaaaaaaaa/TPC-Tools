@@ -33,7 +33,7 @@ Then run the following commands to clone the repo and build the tools:
 ```
 git clone git@github.com:charlesaaaaaaaa/TPC-Tools.git
 cd TPC-DS
-tpcds_path=`pwd` #把 tpcds-kit(当前) 目录路径 赋值给变量 tpcds_path
+tpcds_path=`pwd` #把 TPC-DS(当前) 目录路径 赋值给变量 tpcds_path
 cd tools
 make OS=LINUX
 ```
