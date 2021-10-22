@@ -1,3 +1,0 @@
-begin run Q1, query/q1.sql , Tue Oct 19 02:32:32 EDT 2021
-run Q1 succ, cost: 527.96, totalCost: 527.96, Tue Oct 19 02:41:20 EDT 2021
-begin run Q2, query/q2.sql , Tue Oct 19 02:41:20 EDT 2021
