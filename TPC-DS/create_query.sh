@@ -4,6 +4,8 @@ for i in `seq 1 9` ; do mv q0$i.sql query/q$i.sql ;done
 
 rm q00.sql
 
+mv q*sql query/
+
 for n in `seq 1 99` ; do sed -i '1d' query/q$n.sql ;done
 
 chmod 755 *sh
