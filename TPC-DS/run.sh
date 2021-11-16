@@ -4,12 +4,14 @@ port=${2:-'8881'} #default port
 
 db=${3:-'test'} #default 
 
+mkdir log
+
 total_cost=0
 for i in {1..99}
 do
         echo "begin run Q${i}, query/q$i.sql , `date`"
         begin_time=`date +%s.%N`
-        psql -h ${host} -p ${port} -d ${db}  -f query/q${i}.sql > ./log/log_q${i}.out
+        PGPASSWORD=abc psql -h ${host} -p ${port} -d ${db} -U abc -f query/q${i}.sql > ./log/log_q${i}.out
         rc=$?
         end_time=`date +%s.%N`
         cost=`echo "$end_time-$begin_time"|bc`
