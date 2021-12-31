@@ -1,3 +1,5 @@
+if [[ -f copy.sql ]] ; then  rm tb.txt && echo " delete file tb.txt "; else echo "begin"; fi
+if [[ -f copy.txt ]] ; then  rm tb.txt && echo " delete file tb.txt "; else echo "begin"; fi
 rm copy.sql copy.txt
 
 echo customer >> copy.txt
