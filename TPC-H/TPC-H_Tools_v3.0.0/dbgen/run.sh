@@ -4,9 +4,9 @@ port=${2:-'8881'} #default port
 
 db=${3:-'tpch'} #default db_name
 
-pwds=${4:-'abc'} #default password
+pwds=${5:-'abc'} #default password
 
-user=${5:-'abc'} #defult user
+user=${4:-'abc'} #defult user
 
 rm -rf ./run_log/
 mkdir run_log
