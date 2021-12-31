@@ -34,7 +34,7 @@ vi makefile
 
 7.  bash ./create_statements.sh
 
-8.  bash ./run.sh host port db_name user_name
+8.  bash ./run.sh host port db_name db_user_name db_pwd
 	like
-	bash ./run.sh localhost 8881 tpch abc
+	bash ./run.sh localhost 8881 tpch abc abc
 ```
