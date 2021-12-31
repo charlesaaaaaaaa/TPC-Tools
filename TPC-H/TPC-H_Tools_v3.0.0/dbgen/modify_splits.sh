@@ -1,4 +1,6 @@
-rm tb.txt tb_ntb.txt
+if [[ -f tb.txt ]] ; then  rm tb.txt && echo " delete file tb.txt "; else echo "begin"; fi
+if [[ -f tb_ntb.txt ]] ; then  rm tb.txt && echo " delete file tb.txt "; else echo "wait a minute"; fi
+#rm tb.txt tb_ntb.txt
 for i in $(ls | grep tbl) #把每个生成数据文件每行的最后一个 ｜ 给删除掉
 do
         sed -i 's/|$//' $i
