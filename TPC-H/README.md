@@ -24,11 +24,11 @@ vi makefile
     
 4.  bash ./modify_splits.sh	
 
-5.  psql -h host -p port -d db_name -f ./dss.ddl
+5.  psql -h host -p port -U db_user_name -d db_name -f ./dss.ddl
 	like
-	psql -h localhost -p 8881 -d tpch -f ./dss.ddl
+	psql -h localhost -p 8881 -U abc -d tpch -f ./dss.ddl
 
-6.  bash ./copy.sh host port db_name user_name
+6.  bash ./copy.sh host port db_name db_user_name
 	like 
 	bash ./copy.sh localhost  8881 tpch abc
 
