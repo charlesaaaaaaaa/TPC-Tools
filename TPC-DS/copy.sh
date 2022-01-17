@@ -1,3 +1,7 @@
-iconv -f GBK -t UTF-8 ./tools/customer.dat -o ./tools/tcustomer.dat  #把编码转换成UTF-8
-sed -i 's/'"'"/' ''/g' ./tools/customer.dat                          #把包含有 ‘ 的给去掉，不然计算节点会不认识报错
-
+iconv -f GBK -t UTF-8 ./datas/customer.dat -o ./datas/tcustomer.dat  #把编码转换成UTF-8
+sed -i 's/'"'"/' ''/g' ./datas/customer.dat                          #把包含有 ‘ 的给去掉，不然计算节点会不认识报错
+for i in `ls -l ./datas/ | awk '{print $9}'`
+do
+	sed -i 's/.$//g' ./datas/$i
+	echo $i 
+done

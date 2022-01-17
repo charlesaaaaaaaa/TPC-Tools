@@ -44,14 +44,15 @@ make OS=LINUX
 ```
 	cd ${tpcds_path}  #使用该变量
 	chmod 755 *sh
+	mkdir -p ${tpcds_path}/datas
 	psql -h host -p port -d db_name -f create_table.sql
 	like : psql -h 192.168.0.113 -p 8881 -d test -f create_table.sql
 ```
 #create data dir & generated data
 ```
-        ${tpcds_path}/tools/dsdgen -DIR /TPC_DS-path/datas -SCALE 1 #-SCALE 1 means grnerated 1 GB TPC-DS data
+        ${tpcds_path}/tools/dsdgen -DIR ${tpcds_path}/datas -SCALE 1 #-SCALE 1 means grnerated 1 GB TPC-DS data
         or
-        ${tpcds_path}/tools/dsdgen -DIR /TPC_DS-path/datas -SCALE 1 -parallel 4 -child 1 #-parallel 4 : use 4 threads
+        ${tpcds_path}/tools/dsdgen -DIR ${tpcds_path}/datas -SCALE 1 -parallel 4 -child 1 #-parallel 4 : use 4 threads
 ```
 #copy data 
 ```
