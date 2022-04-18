@@ -57,4 +57,4 @@ echo prepare database on 3s
 sleep 3
 echo
 
-./tpcc.lua --pgsql-host=$host --pgsql-port=$port --pgsql-user=$user --pgsql-password=$pwds --pgsql-db=$db --use_fk=0 --threads=16 --tables=$table --scale=$wh --trx_level=RC --db-ps-mode=auto --db-driver=pgsql prepare
+./tpcc.lua --pgsql-host=$host --pgsql-port=$port --pgsql-user=$user --pgsql-password=$pwds --pgsql-db=$db --use_fk=0 --threads=1 --tables=$table --scale=$wh --trx_level=RC --db-ps-mode=auto --db-driver=pgsql prepare
