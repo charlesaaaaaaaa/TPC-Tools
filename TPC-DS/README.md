@@ -1,4 +1,4 @@
-# tpcds-kit
+# tpcds-kit:
 
 The official TPC-DS tools can be found at [tpc.org](http://www.tpc.org/tpc_documents_current_versions/current_specifications.asp).
 
