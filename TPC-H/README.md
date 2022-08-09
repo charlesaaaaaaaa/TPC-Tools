@@ -1,9 +1,9 @@
-```
-1:  cd TPC-H_Tools_v3.0.0/dbgen/
+###1:  cd TPC-H_Tools_v3.0.0/dbgen/
 
-mv makefile.suite makefile
-vi makefile
-	change makefile on line 103 to 111, like：
+* mv makefile.suite makefile
+* vi makefile
+  *	change makefile on line 103 to 111, like：
+```
 103 CC      = gcc
 104 # Current values for DATABASE are: INFORMIX, DB2, TDAT (Teradata)
 105 #                                  SQLSERVER, SYBASE, ORACLE, VECTORWISE
@@ -13,28 +13,27 @@ vi makefile
 109 DATABASE=ORACLE 
 110 MACHINE = LINUX
 111 WORKLOAD = TPCH
-
-2.  make
 ```
+  * 如果是mysql的话，就改 DATABASE=SQLSERVER
 
+###  make
 
-```
-3.  ./dbgen -vf -s 1
-	-s 1 : Generate 1GB of data
+### ./dbgen -vf -s 1
+* -s 1 : Generate 1GB of data
     
-4.  bash ./modify_splits.sh	
+###  bash ./modify_splits.sh	
 
-5.  psql -h host -p port -U db_user_name -d db_name -f ./dss.ddl
-	like
-	psql -h localhost -p 8881 -U abc -d tpch -f ./dss.ddl
+###  psql -h host -p port -U db_user_name -d db_name -f ./dss.ddl
+* like
+  * psql -h localhost -p 8881 -U abc -d tpch -f ./dss.ddl
 
-6.  bash ./copy.sh host port db_name db_user_name
-	like 
-	bash ./copy.sh localhost  8881 tpch abc
+###  bash ./copy.sh host port db_name db_user_name
+* like 
+  * bash ./copy.sh localhost  8881 tpch abc
 
-7.  bash ./create_statements.sh
+###  bash ./create_statements.sh
 
-8.  bash ./run.sh host port db_name db_user_name db_pwd
+###  bash ./run.sh host port db_name db_user_name db_pwd
 	like
 	bash ./run.sh localhost 8881 tpch abc abc
-```
+
