@@ -1,4 +1,4 @@
-###1:  cd TPC-H_Tools_v3.0.0/dbgen/
+### cd TPC-H_Tools_v3.0.0/dbgen/
 
 * mv makefile.suite makefile
 * vi makefile
