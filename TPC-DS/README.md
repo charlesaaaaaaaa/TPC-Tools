@@ -1,4 +1,5 @@
-# tpcds-kit:
+# 环境设置
+## tpcds-kit:
 
 The official TPC-DS tools can be found at [tpc.org](http://www.tpc.org/tpc_documents_current_versions/current_specifications.asp).
 
@@ -30,24 +31,30 @@ sudo yum install gcc make flex bison byacc git
 
 Then run the following commands to clone the repo and build the tools:
 
-```
-git clone git@github.com:charlesaaaaaaaa/TPC-Tools.git
-cd TPC-DS
-tpcds_path=`pwd` #把 TPC-DS(当前) 目录路径 赋值给变量 tpcds_path
-cd tools
-make OS=LINUX
-```
+* 如果是跑mysql的情况下，要把TPC-DS放到对应节点的服务器上，不能远程。因为
+  * mysql有写入文件限制，所以只能用root账户来运行
+  * 要用到`--defaults-file` 这个参数，可以在服务器上
+  * `ps -ef | grep mysql` 或者 `ps -ef | grep mysql-port`来获取对应端口的默认路径
+# 运行
 
-#create database db_name 
+* git clone https://gitee.com/liu-liangcheng/Tools.git -b master
+* cd TPC-DS
+* tpcds_path=`pwd` #把 TPC-DS(当前) 目录路径 赋值给变量 tpcds_path
+* cd tools
+* make OS=LINUX
 
-#creata tpc-ds table
-```
-	cd ${tpcds_path}  #使用该变量
-	chmod 755 *sh
-	mkdir -p ${tpcds_path}/datas
-	psql -h host -p port -d db_name -f create_table.sql
-	like : psql -h 192.168.0.113 -p 8881 -d test -f create_table.sql
-```
+## create database db_name 
+
+##creata tpc-ds table
+
+* cd ${tpcds_path}  #使用该变量
+* chmod 755 *sh
+* mkdir -p ${tpcds_path}/datas
+* psql -h host -p port -d db_name -f create_table.sql
+* postgresql like : psql -h 192.168.0.113 -p 8881 -d test -f create_table.sql
+* mysql like: mysql --defaults-file=/mysql-configure-file-path/ -uroot -proot db_name < create_table.sql
+	
+
 #create data dir & generated data
 ```
         ${tpcds_path}/tools/dsdgen -DIR ${tpcds_path}/datas -SCALE 1 #-SCALE 1 means grnerated 1 GB TPC-DS data
@@ -55,22 +62,22 @@ make OS=LINUX
         ${tpcds_path}/tools/dsdgen -DIR ${tpcds_path}/datas -SCALE 1 -parallel 4 -child 1 #-parallel 4 : use 4 threads
 ```
 #copy data 
-```
-	cd ${tpcds_path}
-	./copy.sh
-	psql -h host -p port -d db_name -f copy.sql
-	like : psql -h 192.168.0.113 -p 8881 -d test -f copy.sql
-```
-#create posgresql statement 
-```	
+
+* cd ${tpcds_path}
+* mysql:
+  * mysql like : 
+    * ./copy.sh mysql /mysql-configure-file-path/ dbname
+
+* postgres
+  * ./copy.sh
+  * psql -h host -p port -d db_name -f copy.sql
+    * postgresql like : psql -h 192.168.0.113 -p 8881 -d test -f copy.sql
+
+#create TPC-DS test statement 
 	cd ${tpcds_path}
 	./create_query.sh
-```
-#run tpc-ds
-```	
-	cd ${tpcds_path}
-	./run.sh host port db_name 
-	like 
-	./run.sh 192.168.0.113 5423 test
-```
 
+#run tpc-ds
+* cd ${tpcds_path}
+* postgresql like : ./run.sh 192.168.0.113 5423 test
+* mysql like : ./myrun.sh /mysql-configure-file-path/ dbname
