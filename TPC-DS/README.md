@@ -45,7 +45,7 @@ Then run the following commands to clone the repo and build the tools:
 
 ## create database db_name 
 
-##creata tpc-ds table
+## creata tpc-ds table
 
 * cd ${tpcds_path}  #使用该变量
 * chmod 755 *sh
@@ -55,13 +55,13 @@ Then run the following commands to clone the repo and build the tools:
 * mysql like: mysql --defaults-file=/mysql-configure-file-path/ -uroot -proot db_name < create_table.sql
 	
 
-#create data dir & generated data
+## create data dir & generated data
 ```
         ${tpcds_path}/tools/dsdgen -DIR ${tpcds_path}/datas -SCALE 1 #-SCALE 1 means grnerated 1 GB TPC-DS data
         or
         ${tpcds_path}/tools/dsdgen -DIR ${tpcds_path}/datas -SCALE 1 -parallel 4 -child 1 #-parallel 4 : use 4 threads
 ```
-#copy data 
+## copy data 
 
 * cd ${tpcds_path}
 * mysql:
@@ -73,11 +73,11 @@ Then run the following commands to clone the repo and build the tools:
   * psql -h host -p port -d db_name -f copy.sql
     * postgresql like : psql -h 192.168.0.113 -p 8881 -d test -f copy.sql
 
-#create TPC-DS test statement 
+## create TPC-DS test statement 
 	cd ${tpcds_path}
 	./create_query.sh
 
-#run tpc-ds
+## run tpc-ds
 * cd ${tpcds_path}
 * postgresql like : ./run.sh 192.168.0.113 5423 test
 * mysql like : ./myrun.sh /mysql-configure-file-path/ dbname
