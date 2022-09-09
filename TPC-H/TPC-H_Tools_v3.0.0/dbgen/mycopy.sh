@@ -1,6 +1,7 @@
 if [[ -f copy.sql ]] ; then  rm -rf tb.txt && echo " delete file tb.txt "; else echo "begin"; fi
 if [[ -f copy.txt ]] ; then  rm -rf tb.txt && echo " delete file tb.txt "; else echo "begin"; fi
-rm -rf copy.sql copy.txt
+rm -rf copy.sql copy.txt table
+bash ./modify_splits.sh
 
 echo customer >> copy.txt
 echo lineitem >> copy.txt
