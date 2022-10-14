@@ -8,7 +8,7 @@ do
 	table=`echo $i | sed 's/....$//'`
 	if [[ "$1" == "pgsql" ]]
         then
-                echo "\COPY    dbgen_version from 'datas/dbgen_version.dat' with DELIMITER '|' NULL ''  ;" >> copy.sql
+                echo "\COPY $table from 'datas/${table}.dat' with DELIMITER '|' NULL ''  ;" >> copy.sql
 	elif [[ "$1" == "mysql" ]]
 	then
 		echo $table
