@@ -1,43 +1,47 @@
-if [[ -f copy.sql ]] ; then  rm tb.txt && echo " delete file tb.txt "; else echo "begin"; fi
-if [[ -f copy.txt ]] ; then  rm tb.txt && echo " delete file tb.txt "; else echo "begin"; fi
-rm copy.sql copy.txt table
-
-bash ./modify_splits.sh
-
-echo customer >> copy.txt
-echo lineitem >> copy.txt
-echo nation   >> copy.txt
-echo orders   >> copy.txt
-echo partsupp >> copy.txt
-echo part     >> copy.txt
-echo region   >> copy.txt
-echo supplier >> copy.txt
-
-#for copy in $(ls | grep tbl) #开始copy数据
-#do
-#	echo ${copy} >> copy.txt
-#done
-
-#sed -i 's/.tbl//' copy.txt
-
-
-
-for a in `seq 1 9`
+process_num=${1:-'5'}
+if [[ $# != 1 ]]
+then
+	echo 默认的开启的进程数是 5
+	echo 如果想要其它进程数可以：bash copy.sh 进程数
+	echo -e '===========================================\n'
+fi
+rm -rf copy.sql && touch copy.sql
+rm -rf del.sql && touch del.sql
+for i in `ls table | awk -F- '{print $1}' | sort | uniq`
 do
-	ab=`sed -n ${a}p copy.txt`
-	echo "delete from ${ab} ;" >> copy.sql
-	for i in ${ab}
-	do
-		for ia in $(ls ./table | grep ${ab})
-		do
-			echo "\\copy ${ab} from './table/${ia}' with(delimiter '|', null '');" >> copy.sql
-		done
-	done
+	echo "delete from $i; " >> del.sql
 done
 
-sed -i "/part from '\.\/table\/partsupp*/d" copy.sql
-sed -i '$d' copy.sql
-#echo "delete from ${ab} ;" >> copy.sql
-psql -h $1 -p $2 -d $3 -U $4 -f ./copy.sql
+for i in `ls table`
+do
+	table=`echo $i | awk -F- '{print $1}'`
+	echo "\\copy $table from './table/${i}' with(delimiter '|', null '');" >> copy.sql
+done
 
-#rm copy.sql copy.txt
+total_line_num=`cat copy.sql | wc -l`
+each_process_line=`echo "scale=0;$total_line_num/${process_num}+1" | bc -l`
+echo fileNum=$total_line_num 
+echo open $process_num process, at least need $each_process_line line each process
+echo -e '=============================================================================\n'
+
+rm -rf split && mkdir -p split
+split -l $each_process_line -d copy.sql ./split/copy-
+
+cat << EOF > load.sh
+host=\${1:-'172.28.89.156'}
+port=\${2:-'12389'}
+db=\${3:-'tpch'}
+user=\${4:-'abc'}
+pwd=\${5:-'abc'}
+PGPASSWORD=\$pwd psql -h \$host -p \$port -U \$user -d \$db -f del.sql
+for i in \`ls split\`
+do
+	PGPASSWORD=\$pwd psql -h \$host -p \$port -U \$user -d \$db -f split/\$i &
+done
+echo 请通过 ps -ef | grep psql 查看当前copy的进程
+EOF
+
+echo 开启灌数据进程，使用
+echo bash load.sh host port dbname user pwd
+echo 如：bash load.sh 192.168.0.132 35001 tpch abc abc
+echo -e '===============================================\n'
