@@ -1,23 +1,16 @@
-host=${1:-'192.168.0.113'} #default host
-
-port=${2:-'8881'} #default port
-
-db=${3:-'tpch'} #default db_name
-
-pwds=${5:-'abc'} #default password
-
-user=${4:-'abc'} #defult user
+sock=${1:-'/home/kunlun/base/storage_datadir/3311/data/3311.cnf'}
 
 rm -rf ./run_log/
 mkdir run_log
 
 total_cost=0
-for i in {1..22}
+#for i in {19..22}
+for i in 20 22
 do
         echo "begin run Q${i}, query/$i.sql , `date`"
         begin_time=`date +%s.%N`
         #PGPASSWORD=${pwds} psql -h ${host} -p ${port} -d ${db} -U ${user}  -f query/${i}.sql > ./run_log/log_q${i}.out
-        mysql --defaults-file=$1 -uroot -proot mysql < query/${i}.sql > ./run_log/my_log_q${i}.out
+        mysql --defaults-file=$sock -uroot -proot 'tpch_$$_public' < query/${i}.sql > ./run_log/my_log_q${i}.out
 	rc=$?
         end_time=`date +%s.%N`
         cost=`echo "$end_time-$begin_time"|bc`

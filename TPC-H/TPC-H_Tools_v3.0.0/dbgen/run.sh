@@ -1,6 +1,6 @@
-host=${1:-'192.168.0.113'} #default host
+host=${1:-'172.28.89.156'} #default host
 
-port=${2:-'8881'} #default port
+port=${2:-'12389'} #default port
 
 db=${3:-'tpch'} #default db_name
 
@@ -13,6 +13,7 @@ mkdir run_log
 
 total_cost=0
 for i in {1..22}
+#for i in 4 16 17 22
 do
         echo "begin run Q${i}, query/$i.sql , `date`"
         begin_time=`date +%s.%N`
