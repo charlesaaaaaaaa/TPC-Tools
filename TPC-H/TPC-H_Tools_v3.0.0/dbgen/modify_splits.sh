@@ -1,3 +1,4 @@
+mkdir table
 echo 'mv *tbl table'
 mv *tbl table
 echo 'start split'
@@ -7,6 +8,8 @@ do
 	cd table
 	table=`echo $i | sed 's/.tbl//'`
 	echo $table
-	split -l 3000000 -d $i ${table}-
+	sed -i 's/.$//' $i
+	split -l 300000 -d $i ${table}-
+	rm -rf $i
 	cd ..
 done
