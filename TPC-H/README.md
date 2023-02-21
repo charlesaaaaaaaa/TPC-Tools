@@ -29,19 +29,25 @@
 # 运行
 ### ./dbgen -vf -s 1
 * -s 1 : Generate 1GB of data
+* 这一步的-s就是要产生多少G的数据
     
 ###  bash ./modify_splits.sh	
+* 这一步是处理下产生的数据文件
 
 ###  psql -h host -p port -U db_user_name -d db_name -f ./dss.ddl
+* 这里是建立好对应的表
 * like
   * postgresql: psql -h localhost -p 8881 -U abc -d tpch -f ./dss.ddl
   * mysql like: mysql --defaults-file=/mysql-configure-file-path/ -uroot -proot db_name < ./dss.ddl
   
-###  bash ./copy.sh host port db_name db_user_name
+###  bash ./copy.sh 进程数
+* 就是你要用几个进程来灌数据
 * like 
-  * postgres : bash ./copy.sh localhost  8881 tpch abc
+  * postgres : bash ./copy.sh 5
   * mysql : bash ./mycopy.sh /mysql-configure-file-path/
+* 这一步完成后会有提示怎么使用load.sh文件灌数据
 ###  bash ./create_statements.sh
+* 这一步就是产生要运行的sql语句
 
 ###  运行测试
 * postgresql : bash ./run.sh localhost 8881 tpch abc abc
